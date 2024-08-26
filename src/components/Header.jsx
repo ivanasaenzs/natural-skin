@@ -1,18 +1,20 @@
 import React from "react";
 
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 // import SearchBar from "./Searchbar";
 
 import { CiUser, CiShoppingCart } from "react-icons/ci";
 
 function Header() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "#3a6ea5" }}>
       <Container maxWidth="xl">
         <Toolbar
           disableGutters
@@ -30,7 +32,7 @@ function Header() {
           <Box>
             <Button>
               <Typography sx={{ minWidth: 100, color: "#fff" }}>
-               Home
+                Home
               </Typography>
             </Button>
             <Button>
@@ -90,7 +92,7 @@ function Header() {
               sx={{ padding: "1px", minWidth: "auto" }}
             >
               <CiUser
-                size={24}
+                size="24"
                 style={{
                   marginRight: "10px",
                   color: "#fff",
@@ -102,7 +104,7 @@ function Header() {
               href="#"
               sx={{ padding: "1px", minWidth: "auto" }}
             >
-              <CiShoppingCart size={24} style={{ color: "#fff" }} />
+              <CiShoppingCart size="24" style={{ color: "#fff" }} />
             </Button>
           </Box>
         </Toolbar>
