@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 // import SearchBar from "./Searchbar";
 
+import { Link } from "react-router-dom";
+
 import { CiUser, CiShoppingCart } from "react-icons/ci";
 
 function Header() {
@@ -30,12 +32,12 @@ function Header() {
             <SearchBar />
           </Box> */}
           <Box>
-            <Button>
+            <Button component={Link} to="/">
               <Typography sx={{ minWidth: 100, color: "#fff" }}>
                 Home
               </Typography>
             </Button>
-            <Button>
+            <Button component={Link} to="/products">
               <Typography sx={{ minWidth: 100, color: "#fff" }}>
                 Products
               </Typography>
@@ -87,8 +89,8 @@ function Header() {
             }}
           >
             <Button
-              component="a"
-              href="/account/login"
+              component={Link}
+              to="/login"
               sx={{ padding: "1px", minWidth: "auto" }}
             >
               <CiUser

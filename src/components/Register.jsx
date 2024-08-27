@@ -1,6 +1,8 @@
 import React from "react";
 
-import { Box, Button, Grid, TextField, Typography, Link } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+
+import { Link } from "react-router-dom";
 
 // import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
@@ -30,7 +32,7 @@ export const Register = () => {
             Create Account
           </Typography>
           <Link
-            href="#"
+            to="/"
             sx={{
               alignSelf: "flex-start",
               mt: 1,
