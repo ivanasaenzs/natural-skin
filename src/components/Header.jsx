@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 import { CiUser, CiShoppingCart } from "react-icons/ci";
 
-function Header() {
+function Header({ toggleCart }) {
   return (
     <AppBar position="static" sx={{ backgroundColor: "#3a6ea5" }}>
       <Container maxWidth="xl">
@@ -102,8 +102,7 @@ function Header() {
               />
             </Button>
             <Button
-              component="a"
-              href="#"
+              onClick={toggleCart}
               sx={{ padding: "1px", minWidth: "auto" }}
             >
               <CiShoppingCart size="24" style={{ color: "#fff" }} />
