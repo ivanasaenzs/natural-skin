@@ -7,10 +7,12 @@ import { LogIn } from "./components/LogIn";
 import { Register } from "./components/Register";
 import { Error } from "./components/Error";
 import ShoppingCartDrawer from "./components/pages/ShoppingCartDrawer";
+import ProductDetails from "./components/pages/ProductDetails";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Box from "@mui/material/Box";
+import { Products } from "./components/pages/Products";
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -23,17 +25,19 @@ function App() {
     <Router>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Header toggleCart={toggleDrawer(true)} />
+        <ShoppingCartDrawer isOpen={isCartOpen} toggleDrawer={toggleDrawer} />
         <Box sx={{ minHeight: "100vh" }}>
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/detail/:id" element={<ProductDetails />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </Box>
         <Footer />
       </Box>
-      <ShoppingCartDrawer isOpen={isCartOpen} toggleDrawer={toggleDrawer} />
     </Router>
   );
 }

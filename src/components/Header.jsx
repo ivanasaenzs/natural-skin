@@ -8,7 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-// import SearchBar from "./Searchbar";
+
 
 import { Link } from "react-router-dom";
 
@@ -27,10 +27,6 @@ function Header({ toggleCart }) {
             flexWrap: "wrap",
           }}
         >
-          {/* Search Bar */}
-          {/* <Box sx={{ display: "flex", flexGrow: 1, minWidth: "200px" }}>
-            <SearchBar />
-          </Box> */}
           <Box>
             <Button component={Link} to="/">
               <Typography sx={{ minWidth: 100, color: "#fff" }}>

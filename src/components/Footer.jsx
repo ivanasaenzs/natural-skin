@@ -16,7 +16,7 @@ export const Footer = () => {
       <Box component="footer">
         <Box sx={{ backgroundImage: `url(${footerBackground})` }}>
           <Typography
-            as="h4"
+            component="h4"
             align="center"
             sx={{
               fontFamily: "monospace",
