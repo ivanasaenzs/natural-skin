@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   AppBar,
@@ -7,14 +7,53 @@ import {
   Container,
   Toolbar,
   Typography,
+  Menu,
+  MenuItem,
 } from "@mui/material";
-
-
-import { Link } from "react-router-dom";
-
 import { CiUser, CiShoppingCart } from "react-icons/ci";
 
+import { Link, useNavigate } from "react-router-dom";
+
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+
 function Header({ toggleCart }) {
+  const [menuSignoutButton, setMenuSignoutButton] = useState(null);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  // Track authentication state to check if user is logged in or not
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+  // Handles the opening of "menu" (sign out option)
+  const handleMenuOpen = (e) => {
+    console.log(e.currentTarget);
+    setMenuSignoutButton(e.currentTarget);
+  };
+
+  // Handles the closing of "menu" (sign out option)
+  const handleMenuClose = () => {
+    setMenuSignoutButton(null);
+  };
+
+  // Handles logout
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("usuario cerró sesión correctamente");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("error al cerrar sesión: ", error);
+      });
+    handleMenuClose();
+  };
+
   return (
     <AppBar position="static" sx={{ backgroundColor: "#3a6ea5" }}>
       <Container maxWidth="xl">
@@ -85,8 +124,7 @@ function Header({ toggleCart }) {
             }}
           >
             <Button
-              component={Link}
-              to="/login"
+              onClick={user ? handleMenuOpen : () => navigate("/login")}
               sx={{ padding: "1px", minWidth: "auto" }}
             >
               <CiUser
@@ -97,6 +135,22 @@ function Header({ toggleCart }) {
                 }}
               />
             </Button>
+            <Menu
+              anchorEl={menuSignoutButton}
+              open={Boolean(menuSignoutButton)}
+              onClose={handleMenuClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+            >
+              {user && <MenuItem onClick={handleLogout}>Sign Out</MenuItem>}
+            </Menu>
+
             <Button
               onClick={toggleCart}
               sx={{ padding: "1px", minWidth: "auto" }}
