@@ -8,11 +8,11 @@ import { Register } from "./components/Register";
 import { Error } from "./components/Error";
 import ShoppingCartDrawer from "./components/pages/ShoppingCartDrawer";
 import ProductDetails from "./components/pages/ProductDetails";
+import { Products } from "./components/pages/Products";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Box from "@mui/material/Box";
-import { Products } from "./components/pages/Products";
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
