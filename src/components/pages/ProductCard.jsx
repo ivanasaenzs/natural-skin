@@ -1,17 +1,24 @@
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Button,
-} from "@mui/material";
-
+import React from "react";
+import { Card, CardContent, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useFetchImage } from "../../hooks/useFetchImage";
 
-export const ProductCard = ({ productName, productImage, id }) => {
+export const ProductCard = ({ productName, id, imagePath }) => {
+  const { imageUrl } = useFetchImage(imagePath);
+
+  console.log("URL traida de storage:", imageUrl);
+
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia sx={{ height: 340 }} image={productImage} title="Product" />
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt={productName}
+          style={{ width: "100%", height: "auto", objectFit: "cover" }}
+        />
+      ) : (
+        <div>Loading...</div>
+      )}
       <CardContent>
         <Typography gutterBottom variant="h5" component="p" textAlign="center">
           {productName}
