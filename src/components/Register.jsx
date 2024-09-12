@@ -43,12 +43,12 @@ export const Register = () => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log("User successfully created:", userCredential);
         const user = {
           username: userName,
           email: email,
           orders: [],
           id: userCredential.user.uid,
+          cart: [],
         };
         registerNewUser(user);
         console.log("nuevo usuario: ", user);

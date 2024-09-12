@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useFirebase } from "../../hooks/useFirebase";
+import { useCart } from "../../hooks/useCart";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -11,6 +12,7 @@ export const ProductDetails = () => {
     method: "get",
   });
   const [showSpinner, setShowSpinner] = useState(true);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (loading) {
@@ -54,6 +56,15 @@ export const ProductDetails = () => {
       </Box>
     );
   }
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: response?.id,
+      productName: response?.productName,
+      productPrice: response?.productPrice,
+      productImage: response?.productImage,
+    });
+  };
 
   return (
     <Box
@@ -134,6 +145,7 @@ export const ProductDetails = () => {
             alignSelf: "center",
             minWidth: "fit-content",
           }}
+          onClick={handleAddToCart}
         >
           Add to cart
         </Button>
