@@ -63,11 +63,12 @@ export const CartProvider = ({ children }) => {
     }
   }, [cartItems, userId]);
 
+  // AGREGAR PRODUCTO A CARRITO
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
       if (existingItem) {
-        // si un producto (1 cantidad) ya está en el carrito y se vuelva a clickear el botón ADD TO CART nos fijamos si coincide con el existente p/ sumar la cantidad
+        // si un producto (1 cantidad) ya está en el carrito y se vuelva a clickear el botón ADD TO CART nos fijamos si coincide con el existente p/ sumar la cantidad y si no agrega el nuevo
         return prevItems.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
@@ -86,9 +87,56 @@ export const CartProvider = ({ children }) => {
   const calculateTotal = () =>
     cartItems.reduce((total, item) => total + calculateSubtotal(item), 0);
 
+  // elimina un solo producto del carrito
+  const deleteCartItem = (productId) => {
+    console.log("se borró producto");
+    setCartItems((prevItems) => {
+      const updatedCart = prevItems.filter((item) => item.id !== productId);
+      return updatedCart;
+    });
+    // actualiza firebase
+    if (userId) {
+      const updateCartInFirestore = async () => {
+        try {
+          const docRef = doc(db, "users", userId);
+          await updateDoc(docRef, {
+            cart: cartItems.filter((item) => item.id !== productId),
+          });
+        } catch (error) {
+          console.error("Error removing item from cart:", error);
+        }
+      };
+      updateCartInFirestore();
+    }
+  };
+
+  const deleteCart = async () => {
+    // borra el carrito "visualmente"
+    setCartItems([]);
+
+    if (userId) {
+      try {
+        // borra carrito en firebase
+        const docRef = doc(db, "users", userId);
+        await updateDoc(docRef, {
+          cart: [],
+        });
+      } catch (error) {
+        console.error("Error clearing cart:", error);
+      }
+    }
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, calculateSubtotal, calculateTotal }}
+      value={{
+        cartItems,
+        addToCart,
+        calculateSubtotal,
+        calculateTotal,
+        deleteCartItem,
+        deleteCart,
+      }}
     >
       {children}
     </CartContext.Provider>

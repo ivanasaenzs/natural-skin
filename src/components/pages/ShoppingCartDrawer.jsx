@@ -14,7 +14,13 @@ import { useCart } from "../../hooks/useCart";
 import { IoMdCloseCircle } from "react-icons/io";
 
 export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
-  const { cartItems, calculateSubtotal, calculateTotal } = useCart();
+  const {
+    cartItems,
+    calculateSubtotal,
+    calculateTotal,
+    deleteCartItem,
+    deleteCart,
+  } = useCart();
   const isEmpty = cartItems.length === 0;
 
   return (
@@ -48,6 +54,27 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
                     primary={`${item.productName} x ${item.quantity}`}
                     secondary={`$${calculateSubtotal(item).toFixed(2)}`}
                   />
+                  <Button
+                    size="small"
+                    variant="contained"
+                    onClick={() => deleteCartItem(item.id)}
+                    sx={{
+                      minWidth: 0,
+                      padding: 0,
+                      margin: 0,
+                      width: "24px",
+                      height: "24px",
+                      color: "#fff",
+                      backgroundColor: "red",
+                      "&:hover": {
+                        backgroundColor: "#fff",
+                        color: "red",
+                        border: "1px solid red",
+                      },
+                    }}
+                  >
+                    X
+                  </Button>
                 </ListItem>
               ))}
             </List>
@@ -67,11 +94,14 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
             <Button variant="contained" color="primary" fullWidth>
               Checkout
             </Button>
-            <Button size="small">Empty Cart</Button>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
+              <Button size="small" onClick={deleteCart}>
+                Empty Cart
+              </Button>
+            </Box>
           </>
         )}
       </Box>
     </Drawer>
   );
 }
-
