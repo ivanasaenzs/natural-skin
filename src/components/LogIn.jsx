@@ -29,7 +29,7 @@ export const LogIn = () => {
   const handleLoginForm = (e) => {
     e.preventDefault();
 
-// agregar validaciones - react hook form
+    // agregar validaciones - react hook form
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {

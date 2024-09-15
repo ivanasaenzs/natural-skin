@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -10,6 +10,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useCart } from "../../hooks/useCart";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 import { IoMdCloseCircle } from "react-icons/io";
 
@@ -21,7 +23,33 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
     deleteCartItem,
     deleteCart,
   } = useCart();
+  const [user, setUser] = useState();
   const isEmpty = cartItems.length === 0;
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+    return () => unsubscribe(); 
+  }, [auth]);
+
+  // Function to handle the checkout button click
+  const handleCheckout = () => {
+    if (user) {
+     // redirige a página checkout
+      console.log("Dirigiendo a checkout...");
+    } else {
+    
+      toggleDrawer(false);
+      navigate("/login");
+    }
+  };
 
   return (
     <Drawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
@@ -91,7 +119,12 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
                 ${calculateTotal().toFixed(2)}
               </Typography>
             </Box>
-            <Button variant="contained" color="primary" fullWidth>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={handleCheckout}
+            >
               Checkout
             </Button>
             <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
