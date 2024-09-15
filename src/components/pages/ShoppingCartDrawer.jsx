@@ -36,16 +36,15 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
         setUser(null);
       }
     });
-    return () => unsubscribe(); 
+    return () => unsubscribe();
   }, [auth]);
 
   // Function to handle the checkout button click
   const handleCheckout = () => {
     if (user) {
-     // redirige a página checkout
+      // redirige a página checkout
       console.log("Dirigiendo a checkout...");
     } else {
-    
       toggleDrawer(false);
       navigate("/login");
     }

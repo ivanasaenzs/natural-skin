@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import {
   AppBar,
+  Badge,
   Box,
   Button,
   Container,
@@ -15,12 +16,14 @@ import { CiUser, CiShoppingCart } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
 
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { useCart } from "../hooks/useCart";
 
 function Header({ toggleCart }) {
   const [menuSignoutButton, setMenuSignoutButton] = useState(null);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const auth = getAuth();
+  const { cartItems } = useCart();
 
   // Track authentication state to check if user is logged in or not
   useEffect(() => {
@@ -112,8 +115,7 @@ function Header({ toggleCart }) {
               skincare & wellness
             </Typography>
           </Box>
-
-          {/* User and Cart Icons */}
+          {/* User icon */}
           <Box
             sx={{
               display: "flex",
@@ -150,12 +152,20 @@ function Header({ toggleCart }) {
             >
               {user && <MenuItem onClick={handleLogout}>Sign Out</MenuItem>}
             </Menu>
-
+            {/* Cart icon renders badge with number of products inside of cart/doesn't render badge when cart is empty */}
             <Button
               onClick={toggleCart}
               sx={{ padding: "1px", minWidth: "auto" }}
             >
-              <CiShoppingCart size="24" style={{ color: "#fff" }} />
+              <Badge
+                badgeContent={cartItems.reduce(
+                  (total, item) => total + item.quantity,
+                  0
+                )}
+                color="primary"
+              >
+                <CiShoppingCart size="24" style={{ color: "#fff" }} />
+              </Badge>
             </Button>
           </Box>
         </Toolbar>
