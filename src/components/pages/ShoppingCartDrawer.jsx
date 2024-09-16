@@ -28,6 +28,7 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
   const navigate = useNavigate();
   const auth = getAuth();
 
+  // Check authentication
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -43,7 +44,8 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
   const handleCheckout = () => {
     if (user) {
       // redirige a página checkout
-      console.log("Dirigiendo a checkout...");
+      navigate("/checkout");
+      console.log("Redirigiendo a checkout...");
     } else {
       toggleDrawer(false);
       navigate("/login");
@@ -73,7 +75,7 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
             Your cart is empty
           </Typography>
         ) : (
-          <>
+          <Box>
             <List>
               {cartItems.map((item) => (
                 <ListItem key={item.id}>
@@ -131,7 +133,7 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
                 Empty Cart
               </Button>
             </Box>
-          </>
+          </Box>
         )}
       </Box>
     </Drawer>

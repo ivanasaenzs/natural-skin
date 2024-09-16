@@ -9,6 +9,7 @@ import { Error } from "./components/Error";
 import ShoppingCartDrawer from "./components/pages/ShoppingCartDrawer";
 import ProductDetails from "./components/pages/ProductDetails";
 import { Products } from "./components/pages/Products";
+import { Checkout } from "./components/pages/Checkout";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/login" element={<LogIn />} />
             <Route path="/register" element={<Register />} />
             <Route path="/detail/:id" element={<ProductDetails />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </Box>
