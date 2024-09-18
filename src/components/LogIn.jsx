@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   Alert,
   Box,
@@ -9,16 +8,17 @@ import {
   Typography,
   InputAdornment,
   IconButton,
+  FormControl,
 } from "@mui/material";
-
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
 export const LogIn = () => {
-  const [loginError, setLoginError] = useState();
+  const [loginError, setLoginError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordType, setPasswordType] = useState("password");
@@ -26,11 +26,15 @@ export const LogIn = () => {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  const handleLoginForm = (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    criteriaMode: "all",
+  });
 
-    // agregar validaciones - react hook form
-
+  const handleLoginForm = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -46,7 +50,7 @@ export const LogIn = () => {
 
   return (
     <Box
-      onSubmit={handleLoginForm}
+      onSubmit={handleSubmit(handleLoginForm)}
       component="form"
       sx={{
         display: "flex",
@@ -106,7 +110,7 @@ export const LogIn = () => {
           justifyContent="center"
           sx={{ paddingRight: "24px" }}
         >
-          <Box sx={{ mb: 3 }}>
+          <FormControl sx={{ mb: 3 }}>
             <Typography>E-mail</Typography>
             <TextField
               id="email"
@@ -114,9 +118,23 @@ export const LogIn = () => {
               fullWidth
               sx={{ mt: 1 }}
               onChange={(e) => setEmail(e.target.value)}
+              {...register("email", {
+                required: "A value is required",
+                pattern: {
+                  value: /^[^@ ]+@[^@ ]+\.[^@ ]+$/,
+                  message: "This is not a valid e-mail address",
+                },
+              })}
             />
-          </Box>
-          <Box sx={{ mb: 3 }}>
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => (
+                <Typography color="error">{message}</Typography>
+              )}
+            />
+          </FormControl>
+          <FormControl sx={{ mb: 3 }}>
             <Typography>Password</Typography>
             <TextField
               id="password"
@@ -125,6 +143,9 @@ export const LogIn = () => {
               fullWidth
               sx={{ mt: 1 }}
               onChange={(e) => setPassword(e.target.value)}
+              {...register("password", {
+                required: "A value is required",
+              })}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -145,7 +166,14 @@ export const LogIn = () => {
                 ),
               }}
             />
-          </Box>
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => (
+                <Typography color="error">{message}</Typography>
+              )}
+            />
+          </FormControl>
           <Button
             type="submit"
             variant="contained"

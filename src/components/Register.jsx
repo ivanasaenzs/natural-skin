@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-
 import { db } from "../../firebase";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-
 import {
   Box,
   Button,
@@ -13,59 +11,58 @@ import {
   InputAdornment,
   IconButton,
   Alert,
+  FormControl,
 } from "@mui/material";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
 export const Register = () => {
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const [registerError, setRegisterError] = useState("");
   const [registerSuccess, setRegisterSuccess] = useState(false);
-
   const navigate = useNavigate();
   const auth = getAuth();
 
-  const handleRegisterForm = (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    criteriaMode: "all",
+  });
 
-    const registerNewUser = async (newUser) => {
-      try {
-        await setDoc(doc(db, "users", newUser.id), newUser);
-        console.log("nuevo usuario creado en firebase");
-      } catch (err) {
-        err;
-      }
-    };
+  const handleRegisterForm = async (data) => {
+    const { username, email, password } = data;
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = {
-          username: userName,
-          email: email,
-          orders: [],
-          id: userCredential.user.uid,
-          cart: [],
-        };
-        registerNewUser(user);
-        console.log("nuevo usuario: ", user);
-        setRegisterSuccess(true);
-        setRegisterError("");
-        setTimeout(() => navigate("/"), 2000);
-      })
-      .catch((error) => {
-        setRegisterError(error.message);
-        setRegisterSuccess(false);
-      });
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = {
+        username: username,
+        email: email,
+        orders: [],
+        id: userCredential.user.uid,
+        cart: [],
+      };
+      await setDoc(doc(db, "users", user.id), user);
+      setRegisterSuccess(true);
+      setRegisterError("");
+      setTimeout(() => navigate("/"), 2000);
+    } catch (error) {
+      setRegisterError(error.message);
+      setRegisterSuccess(false);
+    }
   };
 
   return (
     <Box
-      onSubmit={handleRegisterForm}
       component="form"
+      onSubmit={handleSubmit(handleRegisterForm)}
       sx={{
         display: "flex",
         alignItems: "center",
@@ -109,37 +106,73 @@ export const Register = () => {
           justifyContent="center"
           sx={{ paddingRight: "24px" }}
         >
-          <Box sx={{ mb: 3 }}>
-            <Typography>Username</Typography>
+          <FormControl sx={{ mb: 3 }}>
+            <Typography component="label">Username</Typography>
             <TextField
               id="username"
               variant="outlined"
               fullWidth
               sx={{ mt: 1 }}
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              {...register("username", {
+                required: "A value is required",
+                minLength: {
+                  value: 5,
+                  message: "Username must contain at least 5 characters",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9\s]+$/,
+                  message: "This input does not accept special characters",
+                },
+              })}
             />
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            <Typography>E-mail</Typography>
+            <ErrorMessage
+              errors={errors}
+              name="username"
+              render={({ message }) => (
+                <Typography color="error">{message}</Typography>
+              )}
+            />
+          </FormControl>
+
+          <FormControl sx={{ mb: 3 }}>
+            <Typography component="label">E-mail</Typography>
             <TextField
               id="email"
               variant="outlined"
               fullWidth
               sx={{ mt: 1 }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register("email", {
+                required: "A value is required",
+                pattern: {
+                  value: /^[^@ ]+@[^@ ]+\.[^@ ]+$/,
+                  message: "This is not a valid e-mail address",
+                },
+              })}
             />
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            <Typography>Password</Typography>
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => (
+                <Typography color="error">{message}</Typography>
+              )}
+            />
+          </FormControl>
+
+          <FormControl sx={{ mb: 3 }}>
+            <Typography component="label">Password</Typography>
             <TextField
               id="password"
               type={passwordType}
               variant="outlined"
               fullWidth
               sx={{ mt: 1 }}
-              onChange={(e) => setPassword(e.target.value)}
+              {...register("password", {
+                required: "A value is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must contain at least 6 characters",
+                },
+              })}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -160,7 +193,15 @@ export const Register = () => {
                 ),
               }}
             />
-          </Box>
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => (
+                <Typography color="error">{message}</Typography>
+              )}
+            />
+          </FormControl>
+
           <Button
             type="submit"
             variant="contained"
