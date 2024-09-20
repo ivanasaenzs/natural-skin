@@ -10,6 +10,7 @@ import ShoppingCartDrawer from "./components/pages/ShoppingCartDrawer";
 import ProductDetails from "./components/pages/ProductDetails";
 import { Products } from "./components/pages/Products";
 import { Checkout } from "./components/pages/Checkout";
+import { Orders } from "./components/pages/Orders";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -35,6 +36,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/detail/:id" element={<ProductDetails />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </Box>

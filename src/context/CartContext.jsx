@@ -75,7 +75,7 @@ export const CartProvider = ({ children }) => {
             : item
         );
       }
-      // se agrega un producto completamente nuevo en el carrito
+      // devuelve array (carrito) con producto completamente nuevo + los anteriormente agregados (prevItems)
       return [...prevItems, { ...product, quantity: 1 }];
     });
   };
@@ -116,7 +116,7 @@ export const CartProvider = ({ children }) => {
 
     if (userId) {
       try {
-        // borra carrito en firebase
+        // borra (actualiza) carrito en firebase
         const docRef = doc(db, "users", userId);
         await updateDoc(docRef, {
           cart: [],
@@ -127,6 +127,36 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // confirmación de pedidos
+  const confirmOrder = async () => {
+    if (!userId || cartItems.length === 0) return;
+
+    const order = {
+      products: cartItems,
+      total: calculateTotal(),
+      date: new Date().toString(),
+    };
+
+    try {
+      const docRef = doc(db, "users", userId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const existingOrders = docSnap.data().orders || [];
+        await updateDoc(docRef, {
+          orders: [...existingOrders, order],
+        });
+      } else {
+        await updateDoc(docRef, {
+          orders: [order],
+        });
+      }
+
+      deleteCart();
+    } catch (error) {
+      console.error("error: ", error);
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -134,6 +164,7 @@ export const CartProvider = ({ children }) => {
         addToCart,
         calculateSubtotal,
         calculateTotal,
+        confirmOrder,
         deleteCartItem,
         deleteCart,
       }}

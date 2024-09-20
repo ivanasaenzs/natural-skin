@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -11,11 +12,17 @@ import {
 import { useCart } from "../../hooks/useCart";
 
 export const Checkout = () => {
-  const { cartItems, calculateTotal } = useCart();
+  const { cartItems, calculateTotal, confirmOrder } = useCart();
   const total = calculateTotal();
+  const navigate = useNavigate();
 
   console.log("productos del carrito:", cartItems);
   console.log("total a pagar:", total);
+
+  const handleConfirmOrder = async () => {
+    await confirmOrder();
+    navigate("/orders");
+  };
 
   return (
     <Box
@@ -50,7 +57,6 @@ export const Checkout = () => {
                 secondary={`Price: $${item.productPrice.toFixed(2)}`}
               />
             </ListItem>
-
             <Divider />
           </Box>
         ))}
@@ -69,6 +75,7 @@ export const Checkout = () => {
             backgroundColor: "green",
           },
         }}
+        onClick={handleConfirmOrder}
       >
         Confirm Order
       </Button>
