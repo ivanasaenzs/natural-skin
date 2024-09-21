@@ -1,8 +1,6 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { Box, Button, Typography } from "@mui/material";
 
 import { CiLocationOn, CiMail, CiLinkedin } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
@@ -13,7 +11,7 @@ import footerBackground from "../assets/dark-motion-liquefied-background.jpg";
 export const Footer = () => {
   return (
     <>
-      <Box component="footer" sx={{ mt: 8 }}>
+      <Box component="footer">
         <Box sx={{ backgroundImage: `url(${footerBackground})` }}>
           <Typography
             component="h4"

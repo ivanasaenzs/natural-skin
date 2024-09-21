@@ -43,6 +43,7 @@ export const ProductsContainer = () => {
           },
           gap: "20px",
           marginTop: "20px",
+          marginBottom: "18px",
         }}
       >
         {filteredProducts.length > 0 ? (

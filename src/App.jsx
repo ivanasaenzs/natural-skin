@@ -25,10 +25,12 @@ function App() {
 
   return (
     <Router>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{ display: "flex", flexDirection: "column" }}
+      >
         <Header toggleCart={toggleDrawer(true)} />
         <ShoppingCartDrawer isOpen={isCartOpen} toggleDrawer={toggleDrawer} />
-        <Box sx={{ minHeight: "100vh" }}>
+        <Box sx={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/products" element={<Products />} />
