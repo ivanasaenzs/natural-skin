@@ -12,7 +12,16 @@ export const Footer = () => {
   return (
     <>
       <Box component="footer">
-        <Box sx={{ backgroundImage: `url(${footerBackground})` }}>
+        <Box
+          sx={{
+            backgroundImage: `url(${footerBackground})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            padding: "40px 20px",
+            color: "#fff",
+            textAlign: "center",
+          }}
+        >
           <Typography
             component="h4"
             align="center"
@@ -21,6 +30,7 @@ export const Footer = () => {
               fontWeight: 700,
               letterSpacing: ".3rem",
               marginBottom: "20px",
+              fontSize: { xs: "1rem", md: "1.5rem" },
             }}
           >
             natural skin
@@ -55,7 +65,7 @@ export const Footer = () => {
         </Box>
         <Box
           sx={{
-            backgroundColor: "#3a6ea5",
+            backgroundColor: "#0079c4",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

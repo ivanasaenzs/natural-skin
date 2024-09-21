@@ -29,10 +29,12 @@ export const ProductDetails = () => {
   if (showSpinner) {
     return (
       <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="50vh"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "50vh",
+        }}
       >
         <CircularProgress size="80px" />
       </Box>
@@ -41,7 +43,13 @@ export const ProductDetails = () => {
 
   if (error) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        minHeight="50vh"
+      >
         <Typography variant="h6" color="error">
           Error fetching product details
         </Typography>
@@ -73,15 +81,18 @@ export const ProductDetails = () => {
         flexDirection: { xs: "column", sm: "row" },
         alignItems: "center",
         justifyContent: "center",
-        border: "2px solid #000",
-        width: "900px",
-        height: "500px",
+        border: "2px solid #e0e0e0",
+        width: { xs: "90%", sm: "80%", md: "70%", lg: "60%" },
+        maxWidth: "900px",
+        height: "auto",
         marginTop: "20px",
         marginX: "auto",
-        padding: "12px",
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+        marginBottom: "60px",
+        padding: "20px",
+        borderRadius: "8px",
+        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
         gap: "15px",
-        overflow: "hidden",
+        backgroundColor: "#fff",
       }}
     >
       <Box
@@ -90,12 +101,13 @@ export const ProductDetails = () => {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
+          padding: "16px",
         }}
       >
         <Link
           to="/products"
           style={{
-            fontSize: "0.8em",
+            fontSize: "0.9em",
             textDecoration: "none",
             textTransform: "uppercase",
             backgroundColor: "#b0f2b4",
@@ -104,6 +116,7 @@ export const ProductDetails = () => {
             color: "inherit",
             textAlign: "center",
             marginBottom: "10px",
+            transition: "background-color 0.3s",
           }}
         >
           Take me back
@@ -111,7 +124,12 @@ export const ProductDetails = () => {
         <img
           src={response?.productImage}
           alt={response?.productName}
-          style={{ maxWidth: "280px", marginBottom: "20px" }}
+          style={{
+            maxWidth: "280px",
+            borderRadius: "8px",
+            boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
+            marginBottom: "20px",
+          }}
         />
       </Box>
 
@@ -125,25 +143,31 @@ export const ProductDetails = () => {
           padding: "20px",
         }}
       >
-        <Typography variant="h4" sx={{ marginBottom: "10px" }}>
+        <Typography
+          variant="h4"
+          sx={{ marginBottom: "10px", fontWeight: "bold" }}
+        >
           {response?.productName}
         </Typography>
         <Typography
           variant="h6"
-          sx={{ fontSize: "17px", marginBottom: "10px" }}
+          sx={{ fontSize: "17px", marginBottom: "10px", color: "#555" }}
         >
           {response?.productDescription}
         </Typography>
-        <Typography variant="h5" sx={{ marginTop: "10px" }}>
+        <Typography variant="h5" sx={{ marginTop: "10px", color: "#1976d2" }}>
           ${response?.productPrice}
         </Typography>
         <Button
           variant="contained"
           sx={{
             marginTop: "8px",
-            padding: "8px 16px",
-            alignSelf: "center",
-            minWidth: "fit-content",
+            padding: "10px 20px",
+            borderRadius: "20px",
+            backgroundColor: "#1976d2",
+            "&:hover": {
+              backgroundColor: "#155a8a",
+            },
           }}
           onClick={handleAddToCart}
         >
@@ -153,5 +177,3 @@ export const ProductDetails = () => {
     </Box>
   );
 };
-
-export default ProductDetails;

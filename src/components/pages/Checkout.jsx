@@ -33,6 +33,7 @@ export const Checkout = () => {
         justifyContent: "center",
         minHeight: "100vh",
         padding: "20px",
+   
       }}
     >
       <Typography variant="h5" gutterBottom>
@@ -61,7 +62,9 @@ export const Checkout = () => {
           </Box>
         ))}
       </List>
-      <Typography variant="h6">Total: ${total.toFixed(2)}</Typography>
+      <Box sx={{ marginTop: "40px", marginBottom: "20px" }}>
+        <Typography variant="h6">Total: ${total.toFixed(2)}</Typography>
+      </Box>
       <Button
         variant="contained"
         color="primary"

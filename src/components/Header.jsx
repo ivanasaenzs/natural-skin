@@ -58,7 +58,7 @@ function Header({ toggleCart }) {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#3a6ea5" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#0079C4" }}>
       <Container maxWidth="xl">
         <Toolbar
           disableGutters
@@ -162,7 +162,7 @@ function Header({ toggleCart }) {
                   (total, item) => total + item.quantity,
                   0
                 )}
-                color="primary"
+                color="error"
               >
                 <CiShoppingCart size="24" style={{ color: "#fff" }} />
               </Badge>
