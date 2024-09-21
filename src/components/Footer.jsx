@@ -13,7 +13,7 @@ import footerBackground from "../assets/dark-motion-liquefied-background.jpg";
 export const Footer = () => {
   return (
     <>
-      <Box component="footer">
+      <Box component="footer" sx={{ mt: 8 }}>
         <Box sx={{ backgroundImage: `url(${footerBackground})` }}>
           <Typography
             component="h4"
