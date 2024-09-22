@@ -105,8 +105,6 @@ function Header({ toggleCart }) {
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
               }}
             >
               natural skin
