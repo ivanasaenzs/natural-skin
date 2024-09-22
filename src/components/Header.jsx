@@ -14,7 +14,6 @@ import {
 import { CiUser, CiShoppingCart } from "react-icons/ci";
 
 import { Link, useNavigate } from "react-router-dom";
-
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { useCart } from "../hooks/useCart";
 
@@ -67,59 +66,75 @@ function Header({ toggleCart }) {
             justifyContent: "space-between",
             alignItems: "center",
             flexWrap: "wrap",
+            flexDirection: { xs: "column", md: "row" }, 
+            textAlign: { xs: "center", md: "left" }, 
+            padding: { xs: "10px", sm: "12px", md: "16px" }, 
           }}
         >
-          <Box>
+          {/* Title and subtitle */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              order: { xs: 1, md: 0 },
+              flexGrow: 1,
+              paddingBottom: { xs: "10px", md: "0" },
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                fontFamily: "monospace",
+                fontWeight: 700,
+                fontSize: { xs: "1.5rem", md: "2rem" },
+                letterSpacing: ".2rem",
+              }}
+            >
+              natural skin
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "0.8rem", md: "1rem" },
+              }}
+            >
+              skincare & wellness
+            </Typography>
+          </Box>
+
+          {/* Menu buttons */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "center", md: "flex-start" }, 
+              gap: "10px",
+              order: { xs: 2, md: 0 },
+            }}
+          >
             <Button component={Link} to="/">
-              <Typography sx={{ minWidth: 100, color: "#fff" }}>
+              <Typography
+                sx={{ fontSize: { xs: "0.8rem", md: "1rem" }, color: "#fff" }}
+              >
                 Home
               </Typography>
             </Button>
             <Button component={Link} to="/products">
-              <Typography sx={{ minWidth: 100, color: "#fff" }}>
+              <Typography
+                sx={{ fontSize: { xs: "0.8rem", md: "1rem" }, color: "#fff" }}
+              >
                 Products
               </Typography>
             </Button>
           </Box>
 
-          {/* Title */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              flexGrow: 1,
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%) translateY(-50%)",
-              top: "50%",
-            }}
-          >
-            <Typography
-              variant="h5"
-              align="center"
-              noWrap
-              component="div"
-              sx={{
-                fontSize: "1.5rem",
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-              }}
-            >
-              natural skin
-            </Typography>
-            <Typography component="span" align="center">
-              skincare & wellness
-            </Typography>
-          </Box>
           {/* User icon */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-end",
-              minWidth: "100px",
+              gap: "10px",
+              order: { xs: 3, md: 0 },
               flexGrow: 1,
             }}
           >
@@ -127,26 +142,12 @@ function Header({ toggleCart }) {
               onClick={user ? handleMenuOpen : () => navigate("/login")}
               sx={{ padding: "1px", minWidth: "auto" }}
             >
-              <CiUser
-                size="24"
-                style={{
-                  marginRight: "10px",
-                  color: "#fff",
-                }}
-              />
+              <CiUser size="24" style={{ color: "#fff" }} />
             </Button>
             <Menu
               anchorEl={menuSignoutButton}
               open={Boolean(menuSignoutButton)}
               onClose={handleMenuClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
             >
               {user && <MenuItem onClick={handleLogout}>Sign Out</MenuItem>}
             </Menu>
