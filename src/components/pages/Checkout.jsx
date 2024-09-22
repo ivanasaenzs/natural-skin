@@ -33,7 +33,6 @@ export const Checkout = () => {
         justifyContent: "center",
         minHeight: "100vh",
         padding: "20px",
-   
       }}
     >
       <Typography variant="h5" gutterBottom>
@@ -73,9 +72,9 @@ export const Checkout = () => {
           width: "165px",
           padding: "10px",
           borderRadius: "8px",
-          backgroundColor: "#1976d2",
+          backgroundColor: "#f58549",
           "&:hover": {
-            backgroundColor: "green",
+            backgroundColor: "#a1c181",
           },
         }}
         onClick={handleConfirmOrder}

@@ -6,7 +6,7 @@ import { CiLocationOn, CiMail, CiLinkedin } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
 import { FaGithub } from "react-icons/fa";
 
-import footerBackground from "../assets/dark-motion-liquefied-background.jpg";
+import footerBackground from "../assets/pexels-photo-891030.jpeg";
 
 export const Footer = () => {
   return (
@@ -43,21 +43,46 @@ export const Footer = () => {
               paddingBottom: "14px",
             }}
           >
-            <Box sx={{ display: "flex", marginBottom: "15px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                marginBottom: "15px",
+                backgroundColor: "#f58549",
+                opacity: "75%",
+              }}
+            >
               <CiLocationOn size={24} style={{ marginRight: "4px" }} />
-              <Typography as="p" sx={{ marginRight: "auto" }}>
+              <Typography
+                as="p"
+                sx={{
+                  marginRight: "auto",
+                }}
+              >
                 Av. Example 123
               </Typography>
             </Box>
 
-            <Box sx={{ display: "flex", marginBottom: "15px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                marginBottom: "15px",
+                backgroundColor: "#f58549",
+                opacity: "75%",
+              }}
+            >
               <CiMail size={24} style={{ marginRight: "4px" }} />
               <Typography as="p" sx={{ marginRight: "auto" }}>
                 naturalskincosmetics@example.com
               </Typography>
             </Box>
 
-            <Box sx={{ display: "flex" }}>
+            <Box
+              sx={{
+                display: "flex",
+                backgroundColor: "#f58549",
+                opacity: "75%",
+              }}
+            >
               <BsTelephone size={24} style={{ marginRight: "4px" }} />
               <Typography as="p">+54 123456-7891</Typography>
             </Box>
@@ -65,7 +90,7 @@ export const Footer = () => {
         </Box>
         <Box
           sx={{
-            backgroundColor: "#0079c4",
+            backgroundColor: "#f58549",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

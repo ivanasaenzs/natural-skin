@@ -57,7 +57,13 @@ export const ProductDetails = () => {
           component={Link}
           to="/products"
           variant="contained"
-          color="primary"
+          sx={{
+            color: "#fff",
+            backgroundColor: "#f58549",
+            "&:hover": {
+              backgroundColor: "#fec89a",
+            },
+          }}
         >
           Take me back
         </Button>
@@ -104,23 +110,22 @@ export const ProductDetails = () => {
           padding: "16px",
         }}
       >
-        <Link
+        <Button
+          component={Link}
           to="/products"
-          style={{
-            fontSize: "0.9em",
-            textDecoration: "none",
-            textTransform: "uppercase",
-            backgroundColor: "#b0f2b4",
+          variant="contained"
+          sx={{
+            color: "#fff",
+            backgroundColor: "#f58549",
+            "&:hover": {
+              backgroundColor: "#fec89a",
+            },
             borderRadius: "20px",
-            padding: "8px 16px",
-            color: "inherit",
-            textAlign: "center",
             marginBottom: "10px",
-            transition: "background-color 0.3s",
           }}
         >
           Take me back
-        </Link>
+        </Button>
         <img
           src={response?.productImage}
           alt={response?.productName}
@@ -155,7 +160,7 @@ export const ProductDetails = () => {
         >
           {response?.productDescription}
         </Typography>
-        <Typography variant="h5" sx={{ marginTop: "10px", color: "#1976d2" }}>
+        <Typography variant="h5" sx={{ marginTop: "10px", color: "#000" }}>
           ${response?.productPrice}
         </Typography>
         <Button
@@ -164,9 +169,9 @@ export const ProductDetails = () => {
             marginTop: "8px",
             padding: "10px 20px",
             borderRadius: "20px",
-            backgroundColor: "#1976d2",
+            backgroundColor: "#f58549",
             "&:hover": {
-              backgroundColor: "#155a8a",
+              backgroundColor: "#fec89a",
             },
           }}
           onClick={handleAddToCart}

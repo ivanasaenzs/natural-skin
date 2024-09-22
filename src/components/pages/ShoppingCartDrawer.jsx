@@ -125,11 +125,24 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
               color="primary"
               fullWidth
               onClick={handleCheckout}
+              sx={{
+                color: "#fff",
+                backgroundColor: "#f58549",
+                "&:hover": {
+                  backgroundColor: "#fec89a",
+                },
+              }}
             >
               Checkout
             </Button>
             <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
-              <Button size="small" onClick={deleteCart}>
+              <Button
+                size="small"
+                onClick={deleteCart}
+                sx={{
+                  color: "#000",
+                }}
+              >
                 Empty Cart
               </Button>
             </Box>

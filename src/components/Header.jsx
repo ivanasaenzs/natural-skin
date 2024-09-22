@@ -58,7 +58,7 @@ function Header({ toggleCart }) {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#0079C4" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#fec89a" }}>
       <Container maxWidth="xl">
         <Toolbar
           disableGutters

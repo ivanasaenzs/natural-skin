@@ -50,8 +50,13 @@ export const ProductCard = ({ productName, productImage, id }) => {
         component={Link}
         to={`/detail/${id}`}
         variant="contained"
-        color="primary"
         fullWidth
+        sx={{
+          backgroundColor: "#f58549",
+          "&:hover": {
+            backgroundColor: "#fec89a",
+          },
+        }}
       >
         More Details
       </Button>
