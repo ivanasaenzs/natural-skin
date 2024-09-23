@@ -99,7 +99,7 @@ export const LogIn = () => {
             Return to Home
           </Link>
         </Grid>
-
+        {/* log-in form with validations */}
         <Grid
           item
           xs={12}

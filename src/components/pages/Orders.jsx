@@ -17,7 +17,7 @@ export const Orders = () => {
   const [userId, setUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Chequear autenticación firebase
+  // check firebase authentication
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -29,7 +29,7 @@ export const Orders = () => {
     return () => unsubscribe();
   }, []);
 
-  // Buscar pedidos del usuario en firebase
+  // looks for users in firebase
   useEffect(() => {
     if (userId) {
       const fetchOrders = async () => {
@@ -86,7 +86,7 @@ export const Orders = () => {
                     primaryTypographyProps={{ fontWeight: "bold" }}
                   />
                 </ListItem>
-                {/* chequeo que existan los productos para que no haya un undefined antes de recorrer array y renderizar */}
+                {/* checks products exist so an undefined isn't returned before mapping and rendering array */}
                 {order.products &&
                   order.products.map((item, index) => (
                     <ListItem key={index}>

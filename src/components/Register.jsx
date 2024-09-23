@@ -100,7 +100,7 @@ export const Register = () => {
             Return to Home
           </Link>
         </Grid>
-
+        {/* register form with validations */}
         <Grid
           item
           xs={12}

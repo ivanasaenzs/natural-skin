@@ -9,13 +9,13 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [userId, setUserId] = useState(null);
 
-  // depende el estado de la autenticación de firebase lo que el carrito muestra
+  // check firebase authentication
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserId(user.uid);
       } else {
-        // si no encuentra user id (usuario cerró sesión o no está registrado) vacía el carrito
+        // if user id is not found (user logged out/is not registered) the cart is emptied out
         setUserId(null);
         setCartItems([]);
       }
@@ -23,7 +23,7 @@ export const CartProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // si el usuario existe, se busca si hay un carrito pre existente al inicio de sesión actual
+  // if user exists, we search for a pre-existent cart (before user logged out)
   useEffect(() => {
     if (userId) {
       const fetchCartItems = async () => {
@@ -41,7 +41,7 @@ export const CartProvider = ({ children }) => {
     }
   }, [userId]);
 
-  // actualiza carrito del usuario en firebase
+  // updates cart in firebase
   useEffect(() => {
     if (userId && cartItems.length > 0) {
       const saveCartItems = async () => {
@@ -58,37 +58,37 @@ export const CartProvider = ({ children }) => {
     }
   }, [cartItems, userId]);
 
-  // AGREGAR PRODUCTO A CARRITO
+  // ADD PRODUCT TO CART
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
       if (existingItem) {
-        // si un producto (1 cantidad) ya está en el carrito y se vuelva a clickear el botón ADD TO CART nos fijamos si coincide con el existente p/ sumar la cantidad y si no agrega el nuevo
+        // if a product (quantity = 1) is already in the cart and ADD TO CART button is clicked, we check if it the peviously added matches the one we're trying to add to either add quantity or add a completely new one
         return prevItems.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      // devuelve array (carrito) con producto completamente nuevo + los anteriormente agregados (prevItems)
+      // returns array (cart) with new product + previously added ones
       return [...prevItems, { ...product, quantity: 1 }];
     });
   };
 
-  // calcula subtotal
+  // calculates subtotal
   const calculateSubtotal = (item) => item.quantity * item.productPrice;
 
-  //calcula total
+  // calculates total
   const calculateTotal = () =>
     cartItems.reduce((total, item) => total + calculateSubtotal(item), 0);
 
-  // elimina un solo producto del carrito
+  //  deletes only one product from the cart
   const deleteCartItem = (productId) => {
     setCartItems((prevItems) => {
       const updatedCart = prevItems.filter((item) => item.id !== productId);
       return updatedCart;
     });
-    // actualiza firebase
+    // updates firebase
     if (userId) {
       const updateCartInFirestore = async () => {
         try {
@@ -104,13 +104,13 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // DELETE CART
   const deleteCart = async () => {
-    // borra el carrito "visualmente"
     setCartItems([]);
 
     if (userId) {
       try {
-        // borra (actualiza) carrito en firebase
+        // deletes and updates cart in firebase
         const docRef = doc(db, "users", userId);
         await updateDoc(docRef, {
           cart: [],
@@ -121,7 +121,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // confirmación de pedidos
+  // ORDER CONFIRMATION
   const confirmOrder = async () => {
     if (!userId || cartItems.length === 0) return;
 
@@ -147,7 +147,7 @@ export const CartProvider = ({ children }) => {
 
       deleteCart();
     } catch (error) {
-      console.error("error: ", error);
+      console.error(error);
     }
   };
 
