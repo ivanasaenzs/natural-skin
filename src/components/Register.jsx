@@ -78,7 +78,11 @@ export const Register = () => {
         spacing={3}
         maxWidth="md"
         alignItems="center"
-        sx={{ border: "2px solid black", borderRadius: "5px" }}
+        sx={{
+          border: "2px solid #e0e0e0",
+          borderRadius: "8px",
+          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+        }}
       >
         <Grid item xs={12} md={4} display="flex" flexDirection="column">
           <Typography variant="h4" sx={{ mb: 2 }}>
@@ -206,7 +210,13 @@ export const Register = () => {
             type="submit"
             variant="contained"
             color="primary"
-            sx={{ mb: 2 }}
+            sx={{
+              mb: 2,
+              backgroundColor: "#f58549",
+              "&:hover": {
+                backgroundColor: "#fec89a",
+              },
+            }}
           >
             Create
           </Button>

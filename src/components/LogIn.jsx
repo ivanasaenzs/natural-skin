@@ -66,8 +66,9 @@ export const LogIn = () => {
         maxWidth="md"
         alignItems="center"
         sx={{
-          border: "2px solid black",
-          borderRadius: "5px",
+          border: "2px solid #e0e0e0",
+          borderRadius: "8px",
+          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
           padding: "12px 0 12px 0",
         }}
       >
@@ -176,7 +177,13 @@ export const LogIn = () => {
             type="submit"
             variant="contained"
             color="primary"
-            sx={{ mb: 2 }}
+            sx={{
+              mb: 2,
+              backgroundColor: "#f58549",
+              "&:hover": {
+                backgroundColor: "#fec89a",
+              },
+            }}
           >
             Sign in
           </Button>
