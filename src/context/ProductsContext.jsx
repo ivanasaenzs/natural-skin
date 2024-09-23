@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { Box } from "@mui/material";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -6,10 +7,12 @@ export const ProductsContext = createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
 
   const value = {
     products,
     setProducts,
+    error,
   };
 
   useEffect(() => {
@@ -22,9 +25,8 @@ export const ProductsProvider = ({ children }) => {
           return { ...product.data(), id: product.id };
         });
         setProducts(productsArray);
-        console.log("Fetched products:", productsArray);
       } catch (error) {
-        console.error("Error fetching products from Firebase:", error);
+        setError("Error fetching products from Firebase:", error);
       }
     };
     getProducts();
@@ -33,6 +35,7 @@ export const ProductsProvider = ({ children }) => {
   return (
     <ProductsContext.Provider value={value}>
       {children}
+      {error && <Box>{error}</Box>}
     </ProductsContext.Provider>
   );
 };

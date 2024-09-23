@@ -36,10 +36,8 @@ export const LogIn = () => {
 
   const handleLoginForm = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+      .then(() => {
         navigate("/");
-        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;

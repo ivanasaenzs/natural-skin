@@ -16,9 +16,6 @@ export const Checkout = () => {
   const total = calculateTotal();
   const navigate = useNavigate();
 
-  console.log("productos del carrito:", cartItems);
-  console.log("total a pagar:", total);
-
   const handleConfirmOrder = async () => {
     await confirmOrder();
     navigate("/orders");

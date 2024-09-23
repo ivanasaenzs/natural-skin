@@ -32,11 +32,6 @@ export const CartProvider = ({ children }) => {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             setCartItems(docSnap.data().cart || []);
-            console.log(
-              docSnap.data().cart,
-              "Buscando el carrito del usuario (ID):",
-              docSnap.id
-            );
           }
         } catch (error) {
           console.error("Error:", error);
@@ -89,7 +84,6 @@ export const CartProvider = ({ children }) => {
 
   // elimina un solo producto del carrito
   const deleteCartItem = (productId) => {
-    console.log("se borró producto");
     setCartItems((prevItems) => {
       const updatedCart = prevItems.filter((item) => item.id !== productId);
       return updatedCart;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db, auth } from "../../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import {
+  Alert,
   Box,
   Typography,
   List,
@@ -14,6 +15,7 @@ import {
 export const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Chequear autenticación firebase
   useEffect(() => {
@@ -37,14 +39,12 @@ export const Orders = () => {
 
           if (docSnap.exists()) {
             const userData = docSnap.data();
-            console.log("data encontrada:", userData);
             setOrders(userData.orders || []);
           } else {
-            console.log("no hay ordenes/pedidos");
             setOrders([]);
           }
-        } catch (error) {
-          console.error("error:", error);
+        } catch {
+          setErrorMessage("Error fetching orders");
         }
       };
       fetchOrders();
@@ -104,6 +104,12 @@ export const Orders = () => {
             <Typography variant="body1">No orders found.</Typography>
           )}
         </List>
+
+        {errorMessage && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {errorMessage}
+          </Alert>
+        )}
       </Box>
     </Container>
   );

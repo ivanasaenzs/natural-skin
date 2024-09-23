@@ -45,7 +45,6 @@ export default function ShoppingCartDrawer({ isOpen, toggleDrawer }) {
     if (user) {
       // redirige a página checkout
       navigate("/checkout");
-      console.log("Redirigiendo a checkout...");
     } else {
       toggleDrawer(false);
       navigate("/login");
