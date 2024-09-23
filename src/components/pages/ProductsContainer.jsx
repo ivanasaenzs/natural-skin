@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { ProductCard } from "./ProductCard";
 import SearchBar from "../../components/Searchbar";
 import { ProductsContext } from "../../context/ProductsContext";
@@ -32,31 +32,22 @@ export const ProductsContainer = () => {
           }}
         />
       </Box>
-      <Container
-        sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(4, 1fr)",
-          },
-          gap: "20px",
-          marginTop: "20px",
-          marginBottom: "18px",
-        }}
-      >
+      {/* Products */}
+      <Container sx={{ marginTop: "20px", marginBottom: "18px" }}>
         {filteredProducts.length > 0 ? (
-          filteredProducts.map(({ productName, productImage, id }) => (
-            <ProductCard
-              productName={productName}
-              productImage={productImage}
-              key={id}
-              id={id}
-            />
-          ))
+          <Grid container spacing={2}>
+            {filteredProducts.map(({ productName, productImage, id }) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={id}>
+                <ProductCard
+                  productName={productName}
+                  productImage={productImage}
+                  id={id}
+                />
+              </Grid>
+            ))}
+          </Grid>
         ) : (
-          <Typography>No products found.</Typography>
+          <Typography textAlign="center">No products found.</Typography>
         )}
       </Container>
     </>
